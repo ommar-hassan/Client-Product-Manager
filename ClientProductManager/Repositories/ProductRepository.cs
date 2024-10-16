@@ -44,12 +44,19 @@ namespace ClientProductManager.Repositories
                 .FirstOrDefaultAsync(p => p.Id == id) ?? throw new ArgumentException("Product not found");
         }
 
-        public async Task<IEnumerable<Product>> GetProductsAsync()
+        public async Task<IEnumerable<Product>> GetProductsAsync(int pageNumber, int pageSize)
         {
             return await _context.Products
                 .AsNoTracking()
                 .OrderBy(p => p.Name)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
+        }
+
+        public async Task<int> CountAsync()
+        {
+            return await _context.Products.CountAsync();
         }
     }
 }

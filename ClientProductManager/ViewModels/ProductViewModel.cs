@@ -15,6 +15,8 @@ namespace ClientProductManager.ViewModels
         [StringLength(150, ErrorMessage = "Product description cannot exceed 150 characters.")]
         [Display(Name = "Product Description")]
         public string Description { get; set; }
+
+        [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
     }
 }

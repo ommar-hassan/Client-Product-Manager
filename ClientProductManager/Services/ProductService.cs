@@ -22,7 +22,7 @@ namespace ClientProductManager.Services
                 Id = Guid.NewGuid(),
                 Name = product.Name,
                 Description = product.Description,
-                IsActive = true
+                IsActive = product.IsActive
             };
 
             await _productRepository.AddProductAsync(newProduct);
@@ -75,20 +75,23 @@ namespace ClientProductManager.Services
             };
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetProductsAsync()
+        public async Task<(IEnumerable<ProductViewModel>, int)> GetProductsAsync(int pageNumber = 1, int pageSize = 10)
         {
-            var products = await _productRepository.GetProductsAsync();
+            var products = await _productRepository.GetProductsAsync(pageNumber, pageSize);
+            var totalCount = await _productRepository.CountAsync();
 
-            if(products == null || !products.Any())
-                return [];
+            if (totalCount == 0)
+                return ([], 0);
 
-            return products.Select(p => new ProductViewModel
+            var productViewModels = products.Select(p => new ProductViewModel
             {
                 Id = p.Id,
                 Name = p.Name,
                 Description = p.Description,
                 IsActive = p.IsActive
             });
+
+            return (productViewModels, totalCount);
         }
     }
 }
