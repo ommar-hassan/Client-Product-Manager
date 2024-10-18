@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ClientProductManager.ViewModels
+﻿namespace ClientProductManager.ViewModels
 {
     public class ProductViewModel
     {
