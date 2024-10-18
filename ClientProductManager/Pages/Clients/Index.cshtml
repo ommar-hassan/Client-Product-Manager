@@ -1,0 +1,81 @@
+﻿@page
+@model ClientProductManager.Pages.Clients.IndexModel
+
+@{
+    ViewData["Title"] = "Clients List";
+}
+
+<h2>Clients List</h2>
+
+<div class="mb-3">
+    <a asp-page="./Create" class="btn btn-success">Add New Client</a>
+</div>
+
+@if(Model.Clients.Any())
+{
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr class="text-center">
+                <th>
+                    @Html.DisplayNameFor(model => model.Clients.First().Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Clients.First().Code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Clients.First().ClientClass)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Clients.First().ClientState)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @foreach (var client in Model.Clients)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => client.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => client.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => client.ClientClass)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => client.ClientState)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@client.Id" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-page="./Details" asp-route-id="@client.Id" class="btn btn-sm btn-info">Details</a>
+                        <a asp-page="./Delete" asp-route-id="@client.Id" class="btn btn-sm btn-danger">Delete</a>
+                        <a asp-page="/ClientProducts/AssignProducts" asp-route-clientId="@client.Id" class="btn btn-sm btn-success">Assign Products</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <nav class="pagination">
+        <ul class="pagination">
+            <li class="page-item @(Model.Pagination.PageNumber <= 1 ? " disabled" : "" ) ">
+                <a class="page-link" asp-route-pageNumber="@(Model.Pagination.PageNumber - 1)" asp-route-pageSize="@(Model.Pagination.PageSize)" >Previous</a>
+            </li>
+            @for (int i = 1; i <= Model.Pagination.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.Pagination.PageNumber ? "active" : "")">
+                    <a class="page-link" asp-route-pageNumber="@i" asp-route-pageSize="Model.Pagination.PageSize">@i</a>
+                </li>
+            }
+            <li class="page-item @(Model.Pagination.PageNumber >= Model.Pagination.TotalPages ? "disabled" : "")">
+                <a class="page-link" asp-route-pageNumber="@(Model.Pagination.PageNumber + 1)" asp-route-pageSize="Model.Pagination.PageSize">Next</a>
+            </li>
+        </ul>
+    </nav>
+}
+else
+{
+    <h3 class="text-danger text-center">No clients found!</h3>
+}
+

@@ -1,0 +1,78 @@
+﻿@page
+@model ClientProductManager.Pages.Clients.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Client Details</h2>
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Client.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Client.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Client.Code)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Client.Code)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Client.ClientClass)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Client.ClientClass)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Client.ClientState)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Client.ClientState)
+        </dd>
+    </dl>
+</div>
+
+<h3>Assigned Products</h3>
+@if (Model.ClientProducts.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr class="text-center">
+                <th>@Html.DisplayNameFor(model => model.ClientProducts.First().ProductName)</th>
+                <th>@Html.DisplayNameFor(model => model.ClientProducts.First().StartDate)</th>
+                <th>@Html.DisplayNameFor(model => model.ClientProducts.First().EndDate)</th>
+                <th>@Html.DisplayNameFor(model => model.ClientProducts.First().License)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cp in Model.ClientProducts)
+            {
+                <tr class="text-center">
+                    <td>@Html.DisplayFor(model => cp.ProductName)</td>
+                    <td>@Html.DisplayFor(model => cp.StartDate)</td>
+                    <td>@Html.DisplayFor(model => cp.EndDate)</td>
+                    <td>@Html.DisplayFor(model => cp.License)</td>
+                    <td>
+                        <a asp-page="/ClientProducts/Edit" asp-route-id="@cp.Id" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-page="/ClientProducts/Delete" asp-route-id="@cp.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No products assigned.</p>
+}
+
+<div>
+    <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.Client.Id">Edit</a>
+    <a class="btn btn-secondary mx-3" asp-page="./Index">Back to List</a>
+</div>
