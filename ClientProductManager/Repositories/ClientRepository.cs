@@ -1,5 +1,4 @@
 ﻿using ClientProductManager.Data;
-using ClientProductManager.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClientProductManager.Repositories
@@ -76,6 +75,11 @@ namespace ClientProductManager.Repositories
             return !await _context.Clients
                 .AsNoTracking()
                 .AnyAsync(c => c.Code == code);
+        }
+
+        public async Task<int> CountAsync()
+        {
+            return await _context.Clients.CountAsync();
         }
     }
 }

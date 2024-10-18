@@ -1,6 +1,4 @@
-﻿using ClientProductManager.Models;
-
-namespace ClientProductManager.Repositories
+﻿namespace ClientProductManager.Repositories
 {
     public interface IClientRepository
     {
@@ -11,5 +9,6 @@ namespace ClientProductManager.Repositories
         Task AddClientAsync(Client client);
         Task UpdateClientAsync(Client client);
         Task DeleteClientAsync(Guid id);
+        Task<int> CountAsync();
     }
 }
