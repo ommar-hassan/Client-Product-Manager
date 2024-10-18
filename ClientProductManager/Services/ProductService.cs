@@ -31,9 +31,19 @@
             if (id == Guid.Empty)
                 throw new ArgumentNullException(nameof(id), "Invalid product ID");
 
-            await _productRepository.DeleteProductAsync(id);
-
-            return true;
+            try
+            {
+                await _productRepository.DeleteProductAsync(id);
+                return true;
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new InvalidOperationException("Product cannot be deleted because it is associated with client products.", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while deleting the product.", ex);
+            }
         }
 
         public async Task<bool> UpdateProductAsync(ProductViewModel product)

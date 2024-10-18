@@ -25,14 +25,29 @@ namespace ClientProductManager.Pages.Products
 
         public async Task<IActionResult> OnPostAsync(Guid id)
         {
-            bool success = await _productService.DeleteProductAsync(id);
+            try { 
+                bool success = await _productService.DeleteProductAsync(id);
 
-            if (!success) {
-                ModelState.AddModelError(string.Empty, "An error occurred while deleting the product.");
+                if (!success) {
+                    ModelState.AddModelError(string.Empty, "An error occurred while deleting the product.");
+                    return Page();
+                }
+
+                return RedirectToPage("./Index");
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.Clear();
+                ModelState.AddModelError(string.Empty, ex.Message);
+                Product = await _productService.GetProductAsync(id);
+                return Page();
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An unexpected error occurred while deleting the product.");
                 return Page();
             }
 
-            return RedirectToPage("./Index");
         }
     }
 }

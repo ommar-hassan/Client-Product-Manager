@@ -25,12 +25,18 @@ namespace ClientProductManager.Repositories
 
         public async Task DeleteProductAsync(Guid id)
         {
-            var product = await GetProductAsync(id);
-            if (product != null)
+            var product = await _context.Products
+                .Include(p => p.ClientProducts)
+                .FirstOrDefaultAsync(p => p.Id == id)
+                ?? throw new ArgumentException("Product not found.");
+
+            if (product.ClientProducts != null && product.ClientProducts.Count != 0)
             {
-                _context.Products.Remove(product);
-                await _context.SaveChangesAsync();
+                throw new InvalidOperationException("Cannot delete the product as it is associated with client products.");
             }
+            
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Product> GetProductAsync(Guid id)
@@ -53,7 +59,7 @@ namespace ClientProductManager.Repositories
                 .ToListAsync();
         }
 
-        public async Task<int> CountAsync()
+        public async Task<int> CountAsync() // for pagination
         {
             return await _context.Products.CountAsync();
         }
