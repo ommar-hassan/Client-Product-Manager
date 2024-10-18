@@ -1,8 +1,4 @@
-﻿using ClientProductManager.Models;
-using ClientProductManager.Repositories;
-using ClientProductManager.ViewModels;
-
-namespace ClientProductManager.Services
+﻿namespace ClientProductManager.Services
 {
     public class ClientService : IClientService
     {
@@ -17,7 +13,7 @@ namespace ClientProductManager.Services
         {
             ArgumentNullException.ThrowIfNull(clientViewModel);
 
-            if (!await _clientRepository.IsValidCodeAsync(clientViewModel.Code)) // code is unique
+            if (!await IsValidCodeAsync(clientViewModel.Code))
                 throw new ArgumentException("A client with this code already exists.");
 
 
@@ -86,11 +82,16 @@ namespace ClientProductManager.Services
             };
         }
 
-        public async Task<IEnumerable<ClientViewModel>> GetClientsAsync(int pageNumber = 1, int pageSize = 5)
+        public async Task<(IEnumerable<ClientViewModel>, int)> GetClientsAsync(int pageNumber, int pageSize)
         {
             var clients = await _clientRepository.GetClientsAsync(pageNumber, pageSize);
 
-            return clients.Select(c => new ClientViewModel
+            var totalClients = await _clientRepository.CountAsync();
+
+            if (totalClients == 0)
+                return ([],0);
+
+            var clientViewModels = clients.Select(c => new ClientViewModel
             {
                 Id = c.Id,
                 Name = c.Name,
@@ -98,6 +99,8 @@ namespace ClientProductManager.Services
                 ClientClass = c.ClientClass,
                 ClientState = c.ClientState
             });
+
+            return (clientViewModels, totalClients);
         }
 
         public async Task<ClientViewModel> GetClientWithProductsAsync(Guid id)
@@ -117,6 +120,11 @@ namespace ClientProductManager.Services
                 ClientState = client.ClientState,
                 // Products
             };
+        }
+
+        public async Task<bool> IsValidCodeAsync(string code)
+        {
+            return await _clientRepository.IsValidCodeAsync(code);
         }
     }
 }
