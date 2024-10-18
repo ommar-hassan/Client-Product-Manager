@@ -1,8 +1,4 @@
-﻿using ClientProductManager.Models;
-using ClientProductManager.Repositories;
-using ClientProductManager.ViewModels;
-
-namespace ClientProductManager.Services
+﻿namespace ClientProductManager.Services
 {
     public class ProductService : IProductService
     {

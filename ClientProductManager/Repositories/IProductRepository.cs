@@ -1,7 +1,4 @@
-﻿using ClientProductManager.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace ClientProductManager.Repositories
+﻿namespace ClientProductManager.Repositories
 {
     public interface IProductRepository
     {

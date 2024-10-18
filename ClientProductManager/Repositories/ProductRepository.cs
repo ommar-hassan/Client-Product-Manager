@@ -1,5 +1,4 @@
 ﻿using ClientProductManager.Data;
-using ClientProductManager.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClientProductManager.Repositories

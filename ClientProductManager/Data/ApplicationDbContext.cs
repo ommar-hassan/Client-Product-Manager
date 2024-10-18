@@ -1,5 +1,6 @@
 ﻿using ClientProductManager.Models;
 using Microsoft.EntityFrameworkCore;
+using ClientProductManager.ViewModels;
 
 namespace ClientProductManager.Data
 {

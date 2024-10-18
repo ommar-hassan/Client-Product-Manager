@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ClientProductManager.ViewModels;
 using ClientProductManager.Services;
 
 namespace ClientProductManager.Pages.Products
@@ -28,7 +27,14 @@ namespace ClientProductManager.Pages.Products
             {
                 return Page();
             }
-            await _productService.AddProductAsync(Product);
+
+            bool success = await _productService.AddProductAsync(Product);
+
+            if (!success)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while creating the product.");
+                return Page();
+            }
 
             return RedirectToPage("./Index");
         }

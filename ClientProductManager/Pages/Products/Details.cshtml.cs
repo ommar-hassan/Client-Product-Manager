@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ClientProductManager.ViewModels;
 using ClientProductManager.Services;
 
 namespace ClientProductManager.Pages.Products

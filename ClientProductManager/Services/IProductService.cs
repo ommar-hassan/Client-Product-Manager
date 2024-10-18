@@ -1,6 +1,4 @@
-﻿using ClientProductManager.ViewModels;
-
-namespace ClientProductManager.Services
+﻿namespace ClientProductManager.Services
 {
     public interface IProductService
     {

@@ -1,0 +1,58 @@
+﻿@page
+@model ClientProductManager.Pages.ClientProducts.AssignProductsModel
+
+@{
+    ViewData["Title"] = "Assign Product to Client";
+}
+
+<h2>Assign Product to @Model.ClientName</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input type="hidden" asp-for="ClientProduct.ClientId" />
+
+            <div class="form-group">
+                <label asp-for="ClientProduct.ProductId" class="control-label"></label>
+                <select asp-for="ClientProduct.ProductId" class="form-control">
+                    <option value="">Select a product</option>
+                    @foreach (var product in Model.ActiveProducts)
+                    {
+                        <option value="@product.Id">@product.Name - @product.Description</option>
+                    }
+                </select>
+                <span asp-validation-for="ClientProduct.ProductId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="ClientProduct.StartDate" class="control-label"></label>
+                <input asp-for="ClientProduct.StartDate" class="form-control" />
+                <span asp-validation-for="ClientProduct.StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="ClientProduct.EndDate" class="control-label"></label>
+                <input asp-for="ClientProduct.EndDate" class="form-control" />
+                <span asp-validation-for="ClientProduct.EndDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="ClientProduct.License" class="control-label"></label>
+                <input asp-for="ClientProduct.License" class="form-control" />
+                <span asp-validation-for="ClientProduct.License" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary">Assign Product</button>
+                <a class="btn btn-secondary mx-3" asp-page="/Clients/Details" asp-route-id="@Model.ClientProduct.ClientId">Back to Client Details</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

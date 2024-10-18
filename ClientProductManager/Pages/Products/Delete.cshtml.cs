@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ClientProductManager.ViewModels;
 using ClientProductManager.Services;
 
 namespace ClientProductManager.Pages.Products
@@ -26,7 +25,12 @@ namespace ClientProductManager.Pages.Products
 
         public async Task<IActionResult> OnPostAsync(Guid id)
         {
-            await _productService.DeleteProductAsync(id);
+            bool success = await _productService.DeleteProductAsync(id);
+
+            if (!success) {
+                ModelState.AddModelError(string.Empty, "An error occurred while deleting the product.");
+                return Page();
+            }
 
             return RedirectToPage("./Index");
         }

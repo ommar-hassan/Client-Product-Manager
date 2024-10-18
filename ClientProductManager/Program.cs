@@ -1,5 +1,4 @@
 using ClientProductManager.Data;
-using ClientProductManager.Repositories;
 using ClientProductManager.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,10 +10,15 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options
     .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IClientService, ClientService>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IClientService, ClientService>();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddScoped<IClientProductRepository, ClientProductRepository>();
+builder.Services.AddScoped<IClientProductService, ClientProductService>();
 
 var app = builder.Build();
 
