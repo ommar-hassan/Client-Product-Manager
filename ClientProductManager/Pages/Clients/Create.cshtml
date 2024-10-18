@@ -1,0 +1,52 @@
+﻿@page
+@model ClientProductManager.Pages.Clients.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Add new client</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Client.Name" class="control-label"></label>
+                <input asp-for="Client.Name" class="form-control mt-2" />
+                <span asp-validation-for="Client.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="Client.Code" class="control-label"></label>
+                <input asp-for="Client.Code" class="form-control mt-2" />
+                <span asp-validation-for="Client.Code" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="Client.ClientClass" class="control-label"></label>
+                <select asp-for="Client.ClientClass" class="form-control mt-2" asp-items="Model.ClientClassList">
+                    <option value="" selected disabled>Select a class</option>
+                </select>
+                <span asp-validation-for="Client.ClientClass" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="Client.ClientState" class="control-label"></label>
+                <select asp-for="Client.ClientState" class="form-control mt-2" asp-items="Model.ClientStateList">
+                    <option value="" selected disabled>Select a state</option>
+                </select>
+                <span asp-validation-for="Client.ClientState" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a class="btn btn-secondary mx-3" asp-page="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

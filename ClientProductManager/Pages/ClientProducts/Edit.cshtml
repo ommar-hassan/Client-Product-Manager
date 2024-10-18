@@ -1,0 +1,61 @@
+﻿@page
+@model ClientProductManager.Pages.ClientProducts.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit Client Product</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ClientProduct.Id" />
+            <input type="hidden" asp-for="ClientProduct.ClientId" />
+
+            <div class="form-group">
+                <label asp-for="ClientProduct.ProductId" class="control-label"></label>
+                <select asp-for="ClientProduct.ProductId" class="form-control">
+                    <option value="">Select a product</option>
+                    @foreach (var product in Model.ActiveProducts)
+                    {
+                        <option value="@product.Value" selected="@(product.Value == Model.ClientProduct.ProductId.ToString() ? "selected" : null)">
+                            @product.Text
+                        </option>
+                    }
+                </select>
+                <span asp-validation-for="ClientProduct.ProductId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="ClientProduct.StartDate" class="control-label"></label>
+                <input asp-for="ClientProduct.StartDate" class="form-control" type="date" />
+                <span asp-validation-for="ClientProduct.StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="ClientProduct.EndDate" class="control-label"></label>
+                <input asp-for="ClientProduct.EndDate" class="form-control" type="date" />
+                <span asp-validation-for="ClientProduct.EndDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="ClientProduct.License" class="control-label"></label>
+                <input asp-for="ClientProduct.License" class="form-control" />
+                <span asp-validation-for="ClientProduct.License" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-4">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a class="btn btn-secondary mx-3" asp-page="./Index">Back to List</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
