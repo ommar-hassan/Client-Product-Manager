@@ -37,11 +37,11 @@
     </dl>
 </div>
 
-<h3>Assigned Products</h3>
+<h4>Assigned Products</h4>
 @if (Model.ClientProducts.Any())
 {
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered table-hover">
+        <thead class="table-active">
             <tr class="text-center">
                 <th>@Html.DisplayNameFor(model => model.ClientProducts.First().ProductName)</th>
                 <th>@Html.DisplayNameFor(model => model.ClientProducts.First().StartDate)</th>

@@ -14,13 +14,13 @@ namespace ClientProductManager.Pages.ClientProducts
         }
 
         [BindProperty]
-        public ClientProductViewModel ClientProductViewModel { get; set; } = default!;
+        public ClientProductViewModel ClientProduct { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            ClientProductViewModel = await _clientProductService.GetClientProductAsync(id);
+            ClientProduct = await _clientProductService.GetClientProductAsync(id);
 
-            if (ClientProductViewModel == null)
+            if (ClientProduct == null)
             {
                 return NotFound();
             }
@@ -38,7 +38,7 @@ namespace ClientProductManager.Pages.ClientProducts
                 return Page();
             }
 
-            return RedirectToPage("/Clients/Details", new { id = ClientProductViewModel.ClientId });
+            return RedirectToPage("/Clients/Details", new { id = ClientProduct.ClientId });
         }
     }
 }

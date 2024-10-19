@@ -27,7 +27,7 @@ namespace ClientProductManager.Pages.Clients
             }
 
             Client = clientviewmodel;
-            ClientProducts = await _clientProductService.GetClientProductsByIdAsync(id);
+            ClientProducts = await _clientProductService.GetClientProductsByClientIdAsync(id);
             return Page();
         }
     }

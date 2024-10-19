@@ -76,7 +76,7 @@
             };
         }
 
-        public async Task<IEnumerable<ClientProductViewModel>> GetClientProductsByIdAsync(Guid clientId)
+        public async Task<IEnumerable<ClientProductViewModel>> GetClientProductsByClientIdAsync(Guid clientId)
         {
             var clientProducts = await _clientProductRepository.GetClientProductsAsync(clientId);
 
